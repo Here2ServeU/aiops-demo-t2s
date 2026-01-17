@@ -37,7 +37,7 @@ You will run a **containerized Express Web App** with:
 
 ### 1) Clone and enter the repo
 ```bash
-git clone <YOUR_REPO_URL>/aiops-demo-repo
+git clone https://github.com/Here2ServeU/aiops-demo-t2s
 cd aiops-demo-repo
 ```
 
