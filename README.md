@@ -39,6 +39,7 @@ docker compose up -d --build
 * **App:** http://localhost:3000
 * **Grafana:** http://localhost:3001 (admin/admin)
 * **Prometheus:** http://localhost:9090
+* **Alertmanager:** http://localhost:9093
 
 
 
