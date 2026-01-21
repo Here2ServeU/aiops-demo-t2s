@@ -1,47 +1,79 @@
-# AIOps Demo: Full Technical Architecture & File Guide
+# AIOps Demo: Express Web App + AI-Assisted Remediation
 
-This repository is a containerized, end-to-end AIOps ecosystem. It demonstrates how to move from **incident detection** to **AI-assisted recommendation** and **human-approved remediation**.
+## **Welcome to the AIOps Transformation Demo**
 
-## Comprehensive File Directory
+In today’s tech landscape, the most valuable engineers aren't just those who can build a website—they are the ones who can keep it running automatically. This project is a real-world demonstration of **AIOps (Artificial Intelligence for IT Operations)**.
 
-### 1. The Core Infrastructure
+### **What is this?**
 
-* **`docker-compose.yml`**: The "orchestrator." It defines and connects all six services (App, Prometheus, Grafana, Alertmanager, Webhook Receiver, and Redis/State). It ensures they can communicate over a shared virtual network.
-* **`.env.example`**: A template for your environment variables. You must copy this to `.env` to store your `SLACK_WEBHOOK_URL` securely.
+This repository provides a complete, "push-button" environment that simulates a professional Cloud Engineering ecosystem. You will move from manual troubleshooting to **automated, AI-assisted remediation**.
 
-### 2. The Application (`/app`)
+### **Why does this matter for your career?**
 
-* **`app/index.js`**: A Node.js Express application that serves as our "production" website. It includes custom instrumentation to export metrics like `http_requests_total`.
-* **`app/Dockerfile`**: Instructions for building the application image.
-* **`app/package.json`**: Lists dependencies, specifically `prom-client` for metrics and `express` for the web server.
+* **High-Demand Skills:** Master the "Big Three" of modern operations: **Docker** (Infrastructure), **Prometheus/Grafana** (Observability), and **Python** (Automation).
+* **Six-Figure Roadmap:** Companies are shifting toward automated AIOps. Learning these tools puts you on the fast track to becoming a high-earning Cloud or Site Reliability Engineer (SRE).
+* **Zero to Hero:** You don't need a math degree or a lifelong coding background. This demo proves that with the right roadmap, you can manage complex systems with simple, powerful commands.
 
-### 3. Monitoring & Alerting (`/prometheus`)
+---
 
-* **`prometheus/prometheus.yml`**: The configuration file that tells Prometheus where to "scrape" data (from our App and Webhook Receiver) and how often.
-* **`prometheus/rules.yml`**: Contains the **Alerting Rules**. It defines the logic for what constitutes a "crisis" (e.g., if the error rate exceeds 5% or CPU usage is too high).
+## **Quick Start (5-Minute Setup)**
 
-### 4. Visualization (`/grafana`)
+1. **Clone the Repo:**
+```bash
+git clone https://github.com/Here2ServeU/aiops-demo-t2s
+cd aiops-demo-t2s
 
-* **`grafana/provisioning/`**: Automates the setup so you don't have to configure Grafana manually.
-* **`datasources/datasource.yml`**: Automatically connects Grafana to Prometheus as the data source.
-* **`dashboards/dashboards.yml`**: Tells Grafana to look in the `/dashboards` folder for pre-made layouts.
+```
 
 
-* **`grafana/dashboards/aiops-demo-dashboard.json`**: A pre-built dashboard that displays request rates, error percentages, and system health in real-time.
+2. **Configure Environment:**
+`cp .env.example .env` (Edit `.env` to add your `SLACK_WEBHOOK_URL`).
+3. **Start the Stack:**
+```bash
+docker compose up -d --build
 
-### 5. Notification Bridge (`/webhook-receiver`)
+```
 
-* **`webhook-receiver/server.js`**: A specialized microservice that listens for alerts from Alertmanager and translates them into a format that **Slack** understands.
-* **`webhook-receiver/Dockerfile`**: Builds the environment for the bridge service.
 
-### 6. The AIOps Engine (`/scripts`)
+4. **Access Services:**
+* **App:** http://localhost:3000
+* **Grafana:** http://localhost:3001 (admin/admin)
+* **Prometheus:** http://localhost:9090
 
-* **`scripts/aiops_recommend.py`**: The "Brain." This Python script queries the Prometheus API to see *exactly* why an alert fired. It then uses logic to post a plain-English recommendation to Slack (e.g., *"I see high CPU; I recommend a restart"*).
-* **`scripts/approve.sh`**: The "Human-in-the-loop" gate. It checks for a pending recommendation in the `state/` folder and, if found, executes the fix.
-* **`scripts/remediate.sh`**: The actual "Fix-it" script. It contains the commands to restart containers or clear caches.
-* **Stress Scripts (`stress_traffic.sh`, `stress_error.sh`, `stress_cpu.sh`)**: Tools used to intentionally "break" the app so you can watch the AIOps system work.
 
-### 7. Persistent State (`/state`)
 
-* **`state/.gitkeep`**: A placeholder folder where the AI stores "pending" actions. This ensures the system remembers a recommendation even if the script finishes running.
+---
+
+## **Documentation & Learning Path**
+
+To get the most out of this platform, explore these detailed guides:
+
+* **[Deployment & Validation Guide](https://github.com/Here2ServeU/aiops-demo-t2s/blob/main/docs/DEPLOYMENT.md)** – Step-by-step instructions to get everything running perfectly.
+* **[Architecture Deep Dive](https://github.com/Here2ServeU/aiops-demo-t2s/blob/main/docs/ARCHITECTURE.md)** – A full technical breakdown of every file and how they work together.
+* **[Slack Integration Setup](https://github.com/Here2ServeU/aiops-demo-t2s/blob/main/docs/SLACK_SETUP.md)** – How to connect your system to real-time alerts.
+* **[Troubleshooting Guide](https://github.com/Here2ServeU/aiops-demo-t2s/blob/main/docs/TROUBLESHOOTING.md)** – Quick fixes for common Docker and connection errors.
+
+
+
+---
+
+### **The Evolution: Scaling to the AWS Cloud**
+
+While this demo runs locally using Docker Compose, real-world AIOps scales using AWS managed services. Here is how this platform evolves as you grow:
+
+* **ECR (Amazon Elastic Container Registry):** Instead of keeping images on your local machine, we move them to **ECR**. This is a secure, private "cloud library" for your Docker images, ensuring they are always available for deployment.
+* **ECS (Amazon Elastic Container Service):** This is the next step up from Docker Compose. **ECS** manages your containers for you, automatically restarting them if they fail and handling the "heavy lifting" of running your Express app in a production environment.
+* **EKS (Amazon Elastic Kubernetes Service):** For maximum scale, we transition to **EKS**. This is the industry standard for managing thousands of containers. It provides the most advanced AIOps capabilities, allowing for complex, self-healing architectures that span across the globe.
+
+
+
+---
+
+## **Join the Community**
+
+This project is maintained by **Rev. Dr. Emmanuel Naweji** as part of the **Transformed2Succeed** initiative. Our mission is to help people transition into high-paying tech careers through hands-on, practical learning.
+
+* **Website:** [transformed2succeed.com](https://www.transformed2succeed.com)
+* **Youtube:** [youtube.com/@TechWithEmmanuel](https://www.youtube.com/@TechWithEmmanuel)
+* **Questions?** Text/WhatsApp +1 (605) 941-7280 or reply to our session emails.
 
